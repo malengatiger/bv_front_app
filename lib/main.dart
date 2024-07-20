@@ -14,20 +14,20 @@ Future<void> main() async {
       options: DefaultFirebaseOptions.currentPlatform);
 
   pp('$mx '
-      ' Firebase App has been initialized: ${firebaseApp.name}, checking for authed current user\n');
+      ' Firebase App has been initialized: 🍎${firebaseApp.name}, checking for authed current user\n');
 
   fbAuthedUser = fb.FirebaseAuth.instance.currentUser;
   if (fbAuthedUser != null) {
     pp('$mx fbAuthUser: ${fbAuthedUser!.uid}');
-    pp("$mx .... fbAuthUser is cool! ........ on to the party!! \n ${await fbAuthedUser?.getIdToken()}");
+    pp("$mx .... fbAuthUser is cool! ........ on to the party!! 🍎🍎 \n ${await fbAuthedUser?.getIdToken()}");
   } else {
-  pp('$mx fbAuthUser: is null. Need to sign up or in. Authenticate the app!');
+  pp('$mx fbAuthUser: is null. 🍎🍎Need to sign up or in. Authenticate the app!');
   }
   runApp(const MyApp());
 }
 late FirebaseApp firebaseApp;
 fb.User? fbAuthedUser;
-const mx = '🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 KasieTransie RouteBuilder : main 🔵🔵';
+const mx = '🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 Bidvest Supplier Programme App 🔵🔵';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
