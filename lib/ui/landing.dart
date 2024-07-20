@@ -30,6 +30,9 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   _navigateToDashboard() {}
+  _navigateToRegister() {}
+  _navigateToSignIn() {}
+
 
   @override
   Widget build(BuildContext context) {
