@@ -1,14 +1,18 @@
+import 'package:bv_front_app/services/register_services.dart';
+import 'package:bv_front_app/ui/landing.dart';
 import 'package:bv_front_app/util.dart';
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   pp('\n\n$mx DefaultFirebaseOptions.currentPlatform: '
-      '${DefaultFirebaseOptions.currentPlatform.toString()}');
+      '\n${DefaultFirebaseOptions.currentPlatform.toString()}');
   //
   firebaseApp = await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform);
@@ -21,42 +25,31 @@ Future<void> main() async {
     pp('$mx fbAuthUser: ${fbAuthedUser!.uid}');
     pp("$mx .... fbAuthUser is cool! ........ on to the party!! 🍎🍎 \n ${await fbAuthedUser?.getIdToken()}");
   } else {
-  pp('$mx fbAuthUser: is null. 🍎🍎Need to sign up or in. Authenticate the app!');
+    pp('$mx fbAuthUser: is null. 👿👿👿👿Need to sign up or in. 👿Authenticate the app!');
   }
-  runApp(const MyApp());
+  await RegisterServices.registerServices(
+      FirebaseAuth.instance, FirebaseFirestore.instance);
+  runApp(const BidvestApp());
 }
+
 late FirebaseApp firebaseApp;
 fb.User? fbAuthedUser;
-const mx = '🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵 Bidvest Supplier Programme App 🔵🔵';
+const mx = '🔵🔵🔵🔵 Bidvest Supplier Programme App 🔵🔵';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BidvestApp extends StatelessWidget {
+  const BidvestApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Bidvest Suppliers Programme',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LandingPage(),
     );
   }
 }
