@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "950142618932",
+    "project_id": "bidvest-33-8eaf4",
+    "storage_bucket": "bidvest-33-8eaf4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950142618932:android:8adf6f466b933b5c58e961",
+        "android_client_info": {
+          "package_name": "com.boha.bidvest.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuVVbNw3A3G86JqghV8fR5t1jaznKdVkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950142618932:android:20e64c0a1b22c5db58e961",
+        "android_client_info": {
+          "package_name": "com.boha.bv_front_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuVVbNw3A3G86JqghV8fR5t1jaznKdVkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950142618932:android:e49eb9e02b14d83858e961",
+        "android_client_info": {
+          "package_name": "com.boha.bvapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuVVbNw3A3G86JqghV8fR5t1jaznKdVkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
