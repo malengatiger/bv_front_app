@@ -50,6 +50,7 @@ class AuthService {
   }
 
   Future signInTemporary() async {
+    //todo - REMOVE after dev test!!!  🔴 🔴 🔴
     if (firebaseAuth.currentUser != null) {
       var token = await firebaseAuth.currentUser?.getIdToken();
       pp(' 😡  😡  😡 ... We have a Token!!!!!');

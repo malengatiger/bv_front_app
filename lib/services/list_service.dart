@@ -15,7 +15,7 @@ class ListService {
     if (u.docs.isNotEmpty) {
       return User.fromJson(u.docs[0].data());
     } else {
-      throw Exception('User not found');
+      throw Exception('Organization User not found');
     }
   }
   Future<User> getBidvestUserByEmail(String email) async {
@@ -26,7 +26,7 @@ class ListService {
     if (u.docs.isNotEmpty) {
       return User.fromJson(u.docs[0].data());
     } else {
-      throw Exception('User not found');
+      throw Exception('Bidvest User not found');
     }
   }
 }

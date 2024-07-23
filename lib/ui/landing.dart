@@ -25,13 +25,13 @@ class _LandingPageState extends State<LandingPage> {
 
   void _checkStatus() async {
     var auth = FirebaseAuth.instance;
-    //todo - REMOVE after dev
+    //todo -  🔴 🔴 🔴REMOVE after dev, do not forget!!!!
     await authService.signInTemporary();
     if (auth.currentUser != null) {
       _navigateToDashboard();
       return;
     }
-    pp('$mm User needs to pony up! ...');
+    pp('$mm .... User needs to pony up! ...');
   }
 
   _navigateToDashboard() {}
