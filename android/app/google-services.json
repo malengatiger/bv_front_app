@@ -61,6 +61,25 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950142618932:android:5656c619c88806e558e961",
+        "android_client_info": {
+          "package_name": "com.bohacom.boha.bv_front_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuVVbNw3A3G86JqghV8fR5t1jaznKdVkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
