@@ -9,27 +9,66 @@ import '../data/organization.dart';
 import '../data/user.dart';
 import '../util.dart';
 
+class UserBag {
+  OrganizationUser? organizationUser;
+  BidvestUser? bidvestUser;
+
+  UserBag(this.organizationUser, this.bidvestUser);
+}
+
 class Prefs {
   final SharedPreferences sharedPreferences;
   static const mm = '💜💜💜💜💜Prefs 💜💜';
 
   Prefs(this.sharedPreferences);
 
-  Future saveUser(User user) async {
+  UserBag getUser()  {
+    var orgUser = _getOrganizationUser();
+    if (orgUser != null) {
+      pp('$mm ... we have an Organization User! ${orgUser.name}');
+      var bag = UserBag(orgUser, null);
+      return bag;
+    }
+    var bvUser = _getBidvestUser();
+    if (bvUser != null) {
+      pp('$mm ... we have a Bidvest User! ${bvUser.name}');
+      var bag = UserBag(null, bvUser);
+      return bag;
+    }
+    return UserBag(null,null);
+  }
+
+  void saveOrganizationUser(OrganizationUser user)  {
     Map mJson = user.toJson();
     var jx = json.encode(mJson);
     sharedPreferences.setString('user', jx);
-    pp('$mm ... sgelaUser saved OK');
+    pp('$mm ... saveOrganizationUser: saved OK');
   }
 
-  User? getUser() {
+  OrganizationUser? _getOrganizationUser() {
     var string = sharedPreferences.getString('user');
     if (string == null) {
       return null;
     }
     var jx = json.decode(string);
-    var user = User.fromJson(jx);
-    pp('$mm ... sgelaUser found OK: ${user.name}');
+    var user = OrganizationUser.fromJson(jx);
+    return user;
+  }
+
+  Future saveBidvestUser(BidvestUser user) async {
+    Map mJson = user.toJson();
+    var jx = json.encode(mJson);
+    sharedPreferences.setString('bidvestUser', jx);
+    pp('$mm ... sgelaUser saved OK');
+  }
+
+  BidvestUser? _getBidvestUser() {
+    var string = sharedPreferences.getString('bidvestUser');
+    if (string == null) {
+      return null;
+    }
+    var jx = json.decode(string);
+    var user = BidvestUser.fromJson(jx);
     return user;
   }
 

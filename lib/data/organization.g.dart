@@ -8,19 +8,21 @@ part of 'organization.dart';
 
 Organization _$OrganizationFromJson(Map<String, dynamic> json) => Organization(
       json['organizationId'] as String?,
-      json['brandingId'] as String?,
-      json['date'] as String?,
-      json['logoUrl'] as String?,
-      json['splashImageUrl'] as String?,
       json['name'] as String?,
+      json['adminName'] as String?,
+      json['date'] as String?,
+      json['adminEmail'] as String?,
+      json['adminCellphone'] as String?,
+      json['adminPassword'] as String?,
     );
 
 Map<String, dynamic> _$OrganizationToJson(Organization instance) =>
     <String, dynamic>{
       'organizationId': instance.organizationId,
       'name': instance.name,
-      'brandingId': instance.brandingId,
+      'adminName': instance.adminName,
       'date': instance.date,
-      'logoUrl': instance.logoUrl,
-      'splashImageUrl': instance.splashImageUrl,
+      'adminEmail': instance.adminEmail,
+      'adminCellphone': instance.adminCellphone,
+      'adminPassword': instance.adminPassword,
     };

@@ -1,10 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bv_front_app/util/navigation_util.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../services/auth_service.dart';
 import '../util.dart';
+import '../util/prefs.dart';
+import '../util/toasts.dart';
+import 'auth/sign_in_page.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -17,6 +21,9 @@ class _LandingPageState extends State<LandingPage> {
   static const mm = '🌍🌍🌍LandingPage: ';
 
   AuthService authService = GetIt.instance<AuthService>();
+  Prefs prefs = GetIt.instance<Prefs>();
+  late UserBag  userBag;
+
   @override
   void initState() {
     super.initState();
@@ -24,21 +31,43 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   void _checkStatus() async {
-    var auth = FirebaseAuth.instance;
-    //todo -  🔴 🔴 🔴REMOVE after dev, do not forget!!!!
     await authService.signInTemporary();
-    if (auth.currentUser != null) {
-      _navigateToDashboard();
+    userBag = prefs.getUser();
+    if (userBag.bidvestUser != null) {
+      _navigateToBidvestLandingPage();
       return;
     }
+    if (userBag.organizationUser != null) {
+      _navigateToOrganizationLandingPage();
+      return;
+    }
+
     pp('$mm .... User needs to pony up! ...');
   }
 
-  _navigateToDashboard() {}
 
-  _navigateToRegister() {}
+  _navigateToRegister() {
+    showToast(
+        textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+        padding: 20,
+        backgroundColor:  Colors.blue.shade800,
+        toastGravity:  ToastGravity.TOP,
+        message: 'Registration is not available yet', context: context);
+  }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+   final GlobalKey<FormState> formKey = GlobalKey();
 
-  _navigateToSignIn() {}
+  _navigateToSignInPage() async {
+    pp('$mm  ... _navigateToSignIn ...');
+    NavigationUtils.navigateToPage(context: context, widget: const SignInPage());
+  }
+
+
+
+  _navigateToBidvestLandingPage() {}
+
+  _navigateToOrganizationLandingPage() {}
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +81,10 @@ class _LandingPageState extends State<LandingPage> {
                 return Stack(children: [
                   Column(
                     children: [
-                      Actions(onRegister: () {
+                      SignUpActions(onRegister: () {
                         _navigateToRegister();
                       }, onSignIn: () {
-                        _navigateToSignIn();
+                        _navigateToSignInPage();
                       }),
                       Expanded(child: Container(color: Colors.blue)),
                     ],
@@ -66,10 +95,10 @@ class _LandingPageState extends State<LandingPage> {
                 return Stack(children: [
                   Column(
                     children: [
-                      Actions(onRegister: () {
+                      SignUpActions(onRegister: () {
                         _navigateToRegister();
                       }, onSignIn: () {
-                        _navigateToSignIn();
+                        _navigateToSignInPage();
                       }),
                       Expanded(child: Container(color: Colors.red)),
                     ],
@@ -80,10 +109,10 @@ class _LandingPageState extends State<LandingPage> {
                 return Stack(children: [
                   Column(
                     children: [
-                      Actions(onRegister: () {
+                      SignUpActions(onRegister: () {
                         _navigateToRegister();
                       }, onSignIn: () {
-                        _navigateToSignIn();
+                        _navigateToSignInPage();
                       }),
                       Expanded(child: Container(color: Colors.teal)),
                     ],
@@ -98,8 +127,8 @@ class _LandingPageState extends State<LandingPage> {
   }
 }
 
-class Actions extends StatelessWidget {
-  const Actions({super.key, required this.onRegister, required this.onSignIn});
+class SignUpActions extends StatelessWidget {
+  const SignUpActions({super.key, required this.onRegister, required this.onSignIn});
 
   final Function onRegister, onSignIn;
 

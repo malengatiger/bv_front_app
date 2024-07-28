@@ -1,5 +1,4 @@
 import 'package:bv_front_app/services/auth_service.dart';
-import 'package:bv_front_app/services/list_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -16,14 +15,14 @@ class RegisterServices {
       FirebaseAuth firebaseAuth, FirebaseFirestore firestore) async {
     pp(' 🌿🌿🌿🌿  Register Services ...');
     var prefs = Prefs(await SharedPreferences.getInstance());
-    var listService = ListService(firestore);
+    var dataService = DataService(firestore);
 
     getIt.registerLazySingleton<AuthService>(() => AuthService(
-        firebaseAuth: firebaseAuth, listService: listService, prefs: prefs));
+        firebaseAuth: firebaseAuth, dataService: dataService, prefs: prefs));
     getIt.registerLazySingleton<DataService>(() => DataService(firestore));
-    getIt.registerLazySingleton<ListService>(() => listService);
+    getIt.registerLazySingleton<Prefs>(() => prefs);
 
     pp(' 🌿🌿🌿🌿  3 Services registered as Lazy Singletons ... 🌹');
-    pp(' 🌿🌿AuthService\n 🌿🌿DataService\n 🌿🌿ListService ');
+    pp(' 🌿🌿AuthService\n 🌿🌿DataService\n🌿🌿Prefs');
   }
 }

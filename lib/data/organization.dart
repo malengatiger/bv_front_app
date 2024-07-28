@@ -5,12 +5,13 @@ part 'organization.g.dart';
 @JsonSerializable()
 class Organization {
   String? organizationId, name;
-  String? brandingId;
+  String? adminName;
   String? date;
-  String? logoUrl, splashImageUrl;
+  String? adminEmail, adminCellphone, adminPassword;
 
-  Organization(this.organizationId, this.brandingId, this.date, this.logoUrl,
-      this.splashImageUrl, this.name);
+
+  Organization(this.organizationId, this.name, this.adminName, this.date,
+      this.adminEmail, this.adminCellphone, this.adminPassword);
 
   factory Organization.fromJson(Map<String, dynamic> json) =>
       _$OrganizationFromJson(json);

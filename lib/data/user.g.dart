@@ -6,7 +6,8 @@ part of 'user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+OrganizationUser _$OrganizationUserFromJson(Map<String, dynamic> json) =>
+    OrganizationUser(
       json['organizationId'] as String?,
       json['organizationName'] as String?,
       json['userId'] as String?,
@@ -19,7 +20,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       json['splashImageUrl'] as String?,
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$OrganizationUserToJson(OrganizationUser instance) =>
+    <String, dynamic>{
       'organizationId': instance.organizationId,
       'organizationName': instance.organizationName,
       'userId': instance.userId,
@@ -30,4 +32,21 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'date': instance.date,
       'profileUrl': instance.profileUrl,
       'splashImageUrl': instance.splashImageUrl,
+    };
+
+BidvestUser _$BidvestUserFromJson(Map<String, dynamic> json) => BidvestUser(
+      json['name'] as String?,
+      json['email'] as String?,
+      json['cellphone'] as String?,
+      json['password'] as String?,
+      json['date'] as String?,
+    );
+
+Map<String, dynamic> _$BidvestUserToJson(BidvestUser instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'email': instance.email,
+      'cellphone': instance.cellphone,
+      'password': instance.password,
+      'date': instance.date,
     };
