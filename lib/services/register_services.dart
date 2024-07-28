@@ -11,15 +11,19 @@ import 'data_service.dart';
 final getIt = GetIt.instance;
 
 class RegisterServices {
+  //
   static Future registerServices(
       FirebaseAuth firebaseAuth, FirebaseFirestore firestore) async {
     pp(' 🌿🌿🌿🌿  Register Services ...');
+    //
     var prefs = Prefs(await SharedPreferences.getInstance());
     var dataService = DataService(firestore);
 
     getIt.registerLazySingleton<AuthService>(() => AuthService(
         firebaseAuth: firebaseAuth, dataService: dataService, prefs: prefs));
+
     getIt.registerLazySingleton<DataService>(() => DataService(firestore));
+
     getIt.registerLazySingleton<Prefs>(() => prefs);
 
     pp(' 🌿🌿🌿🌿  3 Services registered as Lazy Singletons ... 🌹');

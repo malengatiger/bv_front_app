@@ -15,6 +15,7 @@ import '../../services/auth_service.dart';
 import '../../services/data_service.dart';
 import '../../util.dart';
 import '../../util/gaps.dart';
+import '../../util/toasts.dart';
 
 class SurveyPage extends StatefulWidget {
   const SurveyPage({super.key});
@@ -77,6 +78,11 @@ class _SurveyPageState extends State<SurveyPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bidvest Supplier Programme'),
+        actions: [
+          IconButton(onPressed: (){
+            _getTemplates();
+          }, icon: const Icon(Icons.refresh)),
+        ],
       ),
       body: SafeArea(
         child: Stack(
@@ -94,7 +100,7 @@ class _SurveyPageState extends State<SurveyPage> {
                         onTemplateSelected: (template) {
                           pp('$mm template selected: ${template.name}');
                         },
-                        widthLeft: (width / 2) - 20,
+                        widthLeft: (width / 2) - 48,
                         widthRight: (width / 2) - 20);
                   },
                   landscape: (ctx) {
@@ -104,7 +110,7 @@ class _SurveyPageState extends State<SurveyPage> {
                         onTemplateSelected: (template) {
                           pp('$mm template selected: ${template.name}');
                         },
-                        widthLeft: (width / 2) - 20,
+                        widthLeft: (width / 2) - 60,
                         widthRight: (width / 2) - 20);
                   },
                 );
@@ -118,7 +124,7 @@ class _SurveyPageState extends State<SurveyPage> {
                         onTemplateSelected: (template) {
                           pp('$mm template selected: ${template.name}');
                         },
-                        widthLeft: (width / 2) - 20,
+                        widthLeft: (width / 2) - 80,
                         widthRight: (width / 2) - 20),
                   ],
                 );
@@ -172,7 +178,18 @@ class _MainRowState extends State<MainRow> {
         }
       }
     }
-    pp('_onSubmit:   👿 👿 👿 Ratings not completed:  $count  👿');
+    pp('_onSubmit:  👿 👿 👿 Ratings not completed:  $count  👿');
+
+    if (count > 0) {
+      showToast(
+          backgroundColor: Colors.red,
+          textStyle: const TextStyle(color: Colors.white),
+          padding: 20.0,
+          message:
+              'Please respond to all texts; you are missing $count responses',
+          context: context);
+      return;
+    }
 
     var surveyResponse = SurveyResponse(
         surveyTemplateId: surveyTemplate?.surveyTemplateId,
@@ -187,7 +204,7 @@ class _MainRowState extends State<MainRow> {
     try {
       var res = await dataService.addDocument(
           'SurveyResponses', surveyResponse.toJson());
-      pp('_onSubmit:  🍀 🍀 🍀result: $res');
+      pp('_onSubmit:  🍀 🍀 🍀dataService.addDocument: result: $res');
     } catch (e) {
       pp(e);
       if (mounted) {
@@ -202,31 +219,41 @@ class _MainRowState extends State<MainRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: widget.widthLeft,
-          child: SurveyTemplateSelector(widget.surveyTemplates, (t) {
-            pp(' 🥐 🥐 🥐MainRow: template selected:  🥐 ${t.name}');
+    return Card(
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            SizedBox(
+              width: widget.widthLeft,
+              child: SurveyTemplateSelector(widget.surveyTemplates, (t) {
+                pp(' 🥐 🥐 🥐MainRow: template selected:  🥐 ${t.name}');
 
-            setState(() {
-              surveyTemplate = t;
-            });
-            widget.onTemplateSelected(t);
-          }, isDropDown: widget.isDropDown),
+                setState(() {
+                  surveyTemplate = t;
+                });
+                widget.onTemplateSelected(t);
+              }, isDropDown: widget.isDropDown),
+            ),
+            gapW32,
+            busy
+                ? const BusyIndicator(
+                    caption: '🍎🍎 submitting survey response ...',
+                  )
+                : surveyTemplate == null
+                    ? gapH32
+                    : SizedBox(
+                        width: widget.widthRight,
+                        child: SurveyForm(
+                          surveyTemplate: surveyTemplate!,
+                          onSubmit: () {
+                            _onSubmit();
+                          },
+                        )),
+          ],
         ),
-        gapW32,
-        surveyTemplate == null
-            ? gapH32
-            : SizedBox(
-                width: widget.widthRight,
-                child: SurveyForm(
-                  surveyTemplate: surveyTemplate!,
-                  onSubmit: () {
-                    _onSubmit();
-                  },
-                )),
-      ],
+      ),
     );
   }
 }
@@ -245,7 +272,7 @@ class SurveyForm extends StatelessWidget {
 
     List<AccordionSection> list = [];
     for (var section in surveyTemplate.sections) {
-      double mHeight = 48.0 * section.rows.length;
+      double mHeight = 64.0 * section.rows.length;
       list.add(AccordionSection(
           header: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -347,7 +374,7 @@ class _SurveyRowFormState extends State<SurveyRowForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${widget.surveyRow.text}'),
+            Flexible(child: Text('${widget.surveyRow.text}')),
             // RatingDropdown(onSelected: (r){}),
             RatingBar(
               filledIcon: Icons.star,
